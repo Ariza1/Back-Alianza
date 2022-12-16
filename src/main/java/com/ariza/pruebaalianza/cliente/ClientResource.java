@@ -11,13 +11,15 @@ import java.util.List;
 
 @RestController
 public class ClientResource {
+
     private ClientService clientService;
 
     public ClientResource(ClientService clientService) {
         this.clientService = clientService;
     }
 
-    @RequestMapping("/clients")
+    @CrossOrigin(origins = "http://localhost:4200/")
+    @GetMapping("/clients")
     public List<Client> getAllClients() {
         return clientService.getAllClients();
     }
