@@ -32,12 +32,21 @@ public class ClientResource {
         }
         return clients;
     }
-
+    @CrossOrigin(origins = "http://localhost:4200/")
     @RequestMapping(value = "/clients", method = RequestMethod.POST)
     public ResponseEntity<Object> addNewClient(@RequestBody Client client) {
         String sharedKey = clientService.addNewClient(client);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{sharedKey}").buildAndExpand(sharedKey).toUri();
         return ResponseEntity.created(uri).build();
+    }
+    @CrossOrigin(origins = "http://localhost:4200/")
+    @RequestMapping(value = "/clients/advancedSearch", method = RequestMethod.POST)
+    public List<Client> advancedSearch(@RequestBody Client client) {
+        List<Client> clients = clientService.advancedSearch(client);
+        if (clients == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return clients;
     }
 
 }

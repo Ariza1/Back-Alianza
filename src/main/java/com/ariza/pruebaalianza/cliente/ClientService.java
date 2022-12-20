@@ -41,4 +41,16 @@ public class ClientService {
         clients.add(client);
         return client.getSharedKey();
     }
+
+    public List<Client> advancedSearch(Client client) {
+        List<Client> clients1 = clients.stream().filter(cli ->
+                cli.getName().equals(client.getName()) ||
+                        cli.getPhone().equals(client.getSharedKey()) ||
+                        cli.getEmail().equals(client.getEmail()) ||
+                        cli.getEndDate().equals(client.getEndDate()) ||
+                        cli.getStarDate().equals(client.getStarDate())
+        ).toList();
+        if (clients1.isEmpty()) return null;
+        return clients1;
+    }
 }
