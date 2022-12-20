@@ -23,14 +23,14 @@ public class ClientResource {
     public List<Client> getAllClients() {
         return clientService.getAllClients();
     }
-
+    @CrossOrigin(origins = "http://localhost:4200/")
     @RequestMapping("clients/{sharedKey}")
-    public Client getClientBySharedKey(@PathVariable String sharedKey) {
-        Client client = clientService.getClientBySharedKey(sharedKey);
-        if (client == null) {
+    public List<Client> getClientBySharedKey(@PathVariable String sharedKey) {
+        List<Client> clients = clientService.getClientBySharedKey(sharedKey);
+        if (clients == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return client;
+        return clients;
     }
 
     @RequestMapping(value = "/clients", method = RequestMethod.POST)

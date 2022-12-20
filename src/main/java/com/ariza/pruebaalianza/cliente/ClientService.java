@@ -11,6 +11,7 @@ public class ClientService {
 
     static {
         Client client1 = new Client("jgutierrez", "Juliana Gutierrez", "3211345869", "jgurtierrez@gmail.com", new Date(), new Date());
+        Client client6 = new Client("jgutierrez2", "Juliana Gutierrez", "3211345869", "jgurtierrez@gmail.com", new Date(), new Date());
         Client client2 = new Client("mmartinez", "Manuel Martinez", "3018765489", "mmartinez@gmail.com", new Date(), new Date());
         Client client3 = new Client("oruiz", "Oscar Ruiz", "3186754987", "oruiz@gmail.com", new Date(), new Date());
         Client client4 = new Client("agarcia", "Ana Garcia", "3114867586", "agarcia@gmail.com", new Date(), new Date());
@@ -20,17 +21,18 @@ public class ClientService {
         clients.add(client3);
         clients.add(client4);
         clients.add(client5);
+        clients.add(client6);
     }
 
     public List<Client> getAllClients() {
         return clients;
     }
 
-    public Client getClientBySharedKey(String sharedKey) {
+    public List<Client> getClientBySharedKey(String sharedKey) {
         Predicate<? super Client> predicate = Client -> Objects.equals(Client.getSharedKey(), sharedKey);
-        Optional<Client> optionalClient = clients.stream().filter(predicate).findFirst();
-        if (optionalClient.isEmpty()) return null;
-        return optionalClient.get();
+        List<Client> clients1 = clients.stream().filter(x -> x.getSharedKey().contains(sharedKey)).toList();
+        if (clients1.isEmpty()) return null;
+        return clients1;
     }
 
     public String addNewClient(Client client) {
